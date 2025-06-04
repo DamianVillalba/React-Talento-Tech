@@ -1,13 +1,18 @@
 import { useCart } from "../context/CartContext";
 import { useProducts } from "../context/ProductContext";
 import ProductCard from "./ProductCard";
+import loadingImg from "../assets/loading.gif";
 
 const ProductList = () => {
 	const { products, loading, error } = useProducts();
 	const { handleAddToCart } = useCart();
 
 	if (loading) {
-		return <h1>Cargando productos...</h1>;
+		return (
+			<div className="flex justify-center items-center h-screen w-screen">
+				<img alt="loading" src={loadingImg} className="max-w-lg max-h-lg" />
+			</div>
+		);
 	}
 
 	if (error) {
@@ -22,7 +27,7 @@ const ProductList = () => {
 				</h2>
 				<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
 					{products.map((product) => (
-						<ProductCard product = {product} addToCart = {handleAddToCart}/>
+						<ProductCard product={product} addToCart={handleAddToCart} />
 					))}
 				</div>
 			</div>
