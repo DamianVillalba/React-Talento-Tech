@@ -44,7 +44,7 @@ export default function Cart() {
                                 <div className="flex">
                                     <button
                                         type="button"
-                                        onClick={() => handleRemoveFromCart(product.id)}
+                                        onClick={() => handleRemoveFromCart(product.name, product.id)}
                                         className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
                                     >
                                         Eliminar

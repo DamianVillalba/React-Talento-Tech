@@ -12,32 +12,31 @@ export default function Header() {
 		<header className="bg-amber-100">
 			<nav
 				aria-label="Global"
-				className="mx-auto flex max-w-7xl items-center justify-between py-4 px-6 lg:px-8"
+				className="mx-auto flex max-w-7xl items-center justify-between py-1 px-6 lg:px-8"
 			>
 				<div className="flex lg:flex-1">
 					<Link to="/" className="-m-1.5 p-1.5">
-						<span className="sr-only">React Talento-Tech</span>
 						<img
 							alt="Home"
-							src="/src/assets/home-logo.png"
-							className="h-12 w-auto"
+							src="/src/assets/logo-store.png"
+							className="h-18 w-auto"
 						/>
 					</Link>
 				</div>
 				<PopoverGroup className="hidden lg:flex lg:gap-x-12">
 					<Link
 						to="/products"
-						className="text-sm/6 font-semibold text-gray-900"
+						className="text-l/6 font-semibold text-gray-900"
 					>
 						Productos
 					</Link>
 					<Link
 						to="/about-us"
-						className="text-sm/6 font-semibold text-gray-900"
+						className="text-l/6 font-semibold text-gray-900"
 					>
 						Acerca de
 					</Link>
-					<Link to="/contact" className="text-sm/6 font-semibold text-gray-900">
+					<Link to="/contact" className="text-l/6 font-semibold text-gray-900">
 						Contacto
 					</Link>
 				</PopoverGroup>

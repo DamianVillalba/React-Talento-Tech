@@ -1,11 +1,12 @@
 import { createContext, useState, PropsWithChildren, useContext } from "react";
 import { Product } from "../types/Product";
+import Swal from "sweetalert2";
 
 interface ContextType {
 	cart: Product[];
 	showCart: boolean;
 	handleAddToCart: (product: Product) => void;
-	handleRemoveFromCart: (id: string) => void;
+	handleRemoveFromCart: (productName: string, id: string) => void;
 	handleIncrementItem: (id: string) => void;
 	handleDecrementItem: (id: string) => void;
 	toggleCart: () => void;
@@ -28,11 +29,28 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 			}
 			return [...prevCart, { ...product, quantity: 1 }]; //sino agrego el producto y le asigno 1 como cantidad inicial
 		});
-		alert("Producto agregado exitosamente al carrito!") // proximamente un modal o algun mensaje en pantalla mas dinamico
 	};
 
-	const handleRemoveFromCart = (id: string) => {
-		setCart((prevCart) => prevCart.filter((p) => p.id !== id));
+	const handleRemoveFromCart = (productName : string, id: string) => {
+		Swal.fire({
+			title: `Confirmar Eliminación`,
+			html: `¿Estás seguro de que quieres quitar <strong>${productName}</strong> del carrito?<br><strong>Esta acción no se puede deshacer</strong>`,
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4f39f6",
+			cancelButtonColor: "#d33",
+			cancelButtonText: "Cancelar",
+			confirmButtonText: "Sí, eliminar",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				setCart((prevCart) => prevCart.filter((p) => p.id !== id));
+				Swal.fire({
+					title: "¡Eliminado!",
+					text: `${productName} ha sido eliminado del carrito.`,
+					icon: "success",
+				});
+			}
+		});
 	};
 
 	const handleIncrementItem = (id: string) => {
