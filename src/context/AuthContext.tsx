@@ -1,25 +1,35 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 interface ContextType {
-    isAuthenticated: boolean;
+    user: string;
+    login : (username : string) => void;
+    logout :() => void;
 }
 
-export const AuthContext = createContext<ContextType | null>(null);
+const AuthContext = createContext<ContextType | null>(null);
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
+export function AuthProvider({ children }: PropsWithChildren) {
+  const [user, setUser] = useState("");
 
-    //no paso el set porque aun no se usa, pero la idea es pasar una funcion antes que el set en caso de necesitarlo
-    const [isAuthenticated, setIsAuth] = useState(false);
 
-    return (
-        <AuthContext.Provider value={{ isAuthenticated }}>
-            {children}
-        </AuthContext.Provider>
-    );
-};
+  const login = (username : string) => {
+    // Simulando la creación de un token (en una app real, esto sería generado por un servidor)
+    const token = `fake-token-${username}`;
+    localStorage.setItem('authToken', token);
+    setUser(username);
+  };
+  const logout = () => {
+    localStorage.removeItem('authToken');
+    setUser("");
+  };
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider> );
+}
 
 // Hook para usar el contexto
-export const useAuth = (): ContextType => {
+export const useAuthContext = (): ContextType => {
     const context = useContext(AuthContext);
     if (!context) {
         throw new Error("useAuth debe usarse dentro de un <AuthProvider>");

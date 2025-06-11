@@ -1,12 +1,15 @@
-import BackToHomeLink from "../components/common/BackToHome"
+import BackToHomeLink from "../components/common/BackToHome";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
-  return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-        <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
-        <BackToHomeLink />
-    </section>
-  )
-}
+    return (
+        <section className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <div className="w-full max-w-md flex flex-col items-center gap-6">
+                <LoginForm />
+                <BackToHomeLink className="mt-2" />
+            </div>
+        </section>
+    );
+};
 
-export default Login
+export default Login;
