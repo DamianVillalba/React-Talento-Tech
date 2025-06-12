@@ -11,51 +11,53 @@ import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
-	const { showCart, toggleCart, cart, handleRemoveFromCart } = useCart();
+	const { showCart, toggleCart, cart, handleRemoveFromCart, processPurchase } = useCart();
 
 	const totalCart = () => {
 		return cart.reduce((total, p) => total + p.price * p.quantity, 0);
 	};
 
-    //TODO: queda implementar decrementar, incrementar y limpiar carrito
-    //Los botones de pago mas adelante
-	const listCartItems = () : React.ReactNode => {
-		return(
-            <ul role="list" className="-my-6 divide-y divide-gray-200">
-                {cart.map((product) => (
-                    <li key={product.id} className="flex py-6">
-                        {/* proximamente...?
+	//TODO: queda implementar decrementar, incrementar y limpiar carrito
+	//Los botones de pago mas adelante
+	const listCartItems = (): React.ReactNode => {
+		return (
+			<ul role="list" className="-my-6 divide-y divide-gray-200">
+				{cart.map((product) => (
+					<li key={product.id} className="flex py-6">
+						{/* proximamente...?
                                 <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                                 <img alt={product.name} src={product.img} className="size-full object-cover" />
                                 </div> */}
 
-                        <div className="ml-4 flex flex-1 flex-col">
-                            <div>
-                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                    <Link to={`/products/${product.id}`}>
-                                        <h3>{product.name}</h3>
-                                    </Link>
-                                    <p className="ml-4">{product.price}</p>
-                                </div>
-                            </div>
-                            <div className="flex flex-1 items-end justify-between text-sm">
-                                <p className="text-gray-500">Cantidad: {product.quantity}</p>
+						<div className="ml-4 flex flex-1 flex-col">
+							<div>
+								<div className="flex justify-between text-base font-medium text-gray-900">
+									<Link to={`/products/${product.id}`}>
+										<h3>{product.name}</h3>
+									</Link>
+									<p className="ml-4">{product.price}</p>
+								</div>
+							</div>
+							<div className="flex flex-1 items-end justify-between text-sm">
+								<p className="text-gray-500">Cantidad: {product.quantity}</p>
 
-                                <div className="flex">
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveFromCart(product.name, product.id)}
-                                        className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                                    >
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-        );
+								<div className="flex">
+									<button
+										type="button"
+										onClick={() =>
+											handleRemoveFromCart(product.name, product.id)
+										}
+										className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+									>
+										Eliminar
+									</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				))}
+			</ul>
+		);
 	};
 
 	return (
@@ -93,7 +95,11 @@ export default function Cart() {
 
 									<div className="mt-8">
 										<div className="flow-root">
-											{cart.length === 0 ? (<span>No hay productos en el carrito</span>) : listCartItems()}
+											{cart.length === 0 ? (
+												<span>No hay productos en el carrito</span>
+											) : (
+												listCartItems()
+											)}
 										</div>
 									</div>
 								</div>
@@ -102,6 +108,32 @@ export default function Cart() {
 									<div className="flex justify-between text-base font-medium text-gray-900">
 										<p>Total</p>
 										<p>${totalCart()}</p>
+									</div>
+									<div className="mt-6">
+										<button
+											onClick={processPurchase}
+											disabled={cart.length === 0}
+											className={`w-full flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium shadow-xs
+            								${cart.length === 0
+                								? "bg-gray-600 text-white cursor-not-allowed"
+                								: "bg-indigo-600 text-white hover:bg-indigo-700  cursor-pointer"}
+        									`}
+										>
+											Finalizar Compra
+										</button>
+									</div>
+									<div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+										<p>
+											o{" "}
+											<button
+												type="button"
+												onClick={toggleCart}
+												className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+											>
+												Continua comprando
+												<span aria-hidden="true"> &rarr;</span>
+											</button>
+										</p>
 									</div>
 								</div>
 							</div>

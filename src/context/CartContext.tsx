@@ -10,6 +10,7 @@ interface ContextType {
 	handleIncrementItem: (id: string) => void;
 	handleDecrementItem: (id: string) => void;
 	toggleCart: () => void;
+	processPurchase : () => void;
 	//handleClearCart: () => void; mas adelante
 }
 
@@ -31,7 +32,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 		});
 	};
 
-	const handleRemoveFromCart = (productName : string, id: string) => {
+	const handleRemoveFromCart = (productName: string, id: string) => {
 		Swal.fire({
 			title: `Confirmar Eliminación`,
 			html: `¿Estás seguro de que quieres quitar <strong>${productName}</strong> del carrito?<br><strong>Esta acción no se puede deshacer</strong>`,
@@ -72,6 +73,16 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 
 	const toggleCart = () => setShowCart((prev) => !prev); //cambio al estado contrario
 
+	const processPurchase = () => {
+		//TODO: agregar crud para eliminar bajar cantidad productos
+		Swal.fire({
+			title: "Compra Exitosa!",
+			timer: 3000,
+			icon: "success",
+			showConfirmButton: false,
+		});
+	};
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -82,6 +93,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 				handleRemoveFromCart,
 				handleIncrementItem,
 				handleDecrementItem,
+				processPurchase,
 			}}
 		>
 			{children}

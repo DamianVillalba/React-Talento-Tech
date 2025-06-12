@@ -1,7 +1,7 @@
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
-import Dashboard from "./pages/Dashboard";
+import Admin from "./pages/Admin";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import { Routes, Route } from "react-router-dom";
@@ -24,10 +24,10 @@ function App() {
 			</Route>
 			{/* rutas sin layout */}
 			<Route
-				path="/dashboard"
+				path="/admin"
 				element={
 					<ProtectedRoute>
-						<Dashboard />
+						<Admin />
 					</ProtectedRoute>
 				}
 			/>
