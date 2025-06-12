@@ -74,6 +74,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 	const toggleCart = () => setShowCart((prev) => !prev); //cambio al estado contrario
 
 	const processPurchase = () => {
+		clearCart();
 		//TODO: agregar crud para eliminar bajar cantidad productos
 		Swal.fire({
 			title: "Compra Exitosa!",
@@ -94,7 +95,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 			confirmButtonText: "Sí, vaciar",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				setCart([]);
+				clearCart();
 				Swal.fire({
 					title: "¡Vaciado!",
 					text: `el carrito ha sido vaciado.`,
@@ -102,6 +103,10 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 				});
 			}
 		});
+	}
+
+	const clearCart = () => {
+		setCart([]);
 	}
 
 	return (
