@@ -11,7 +11,7 @@ interface ContextType {
 	handleDecrementItem: (id: string) => void;
 	toggleCart: () => void;
 	processPurchase : () => void;
-	//handleClearCart: () => void; mas adelante
+	handleClearCart: () => void;
 }
 
 export const CartContext = createContext<ContextType | null>(null);
@@ -83,6 +83,27 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 		});
 	};
 
+	const handleClearCart = () => {
+		Swal.fire({
+			html: `¿Estás seguro de que quieres <strong>vaciar el carrito</strong>? <br><strong>Esta acción no se puede deshacer</strong>`,
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4f39f6",
+			cancelButtonColor: "#d33",
+			cancelButtonText: "Cancelar",
+			confirmButtonText: "Sí, vaciar",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				setCart([]);
+				Swal.fire({
+					title: "¡Vaciado!",
+					text: `el carrito ha sido vaciado.`,
+					icon: "success",
+				});
+			}
+		});
+	}
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -94,6 +115,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 				handleIncrementItem,
 				handleDecrementItem,
 				processPurchase,
+				handleClearCart,
 			}}
 		>
 			{children}

@@ -6,12 +6,21 @@ import {
 	DialogPanel,
 	DialogTitle,
 } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
-	const { showCart, toggleCart, cart, handleRemoveFromCart, processPurchase } = useCart();
+	const {
+		showCart,
+		toggleCart,
+		cart,
+		handleRemoveFromCart,
+		processPurchase,
+		handleClearCart,
+		handleDecrementItem,
+		handleIncrementItem,
+	} = useCart();
 
 	const totalCart = () => {
 		return cart.reduce((total, p) => total + p.price * p.quantity, 0);
@@ -39,8 +48,28 @@ export default function Cart() {
 								</div>
 							</div>
 							<div className="flex flex-1 items-end justify-between text-sm">
-								<p className="text-gray-500">Cantidad: {product.quantity}</p>
-
+								<div className="flex items-center gap-2">
+									<button
+										type="button"
+										onClick={() => handleDecrementItem(product.id)}
+										className="p-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50"
+										disabled={product.quantity <= 1}
+										aria-label="Quitar uno"
+									>
+										<MinusIcon className="h-4 w-4" />
+									</button>
+									<span className="text-gray-700 font-medium min-w-[24px] text-center">
+										{product.quantity}
+									</span>
+									<button
+										type="button"
+										onClick={() => handleIncrementItem(product.id)}
+										className="p-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+										aria-label="Sumar uno"
+									>
+										<PlusIcon className="h-4 w-4" />
+									</button>
+								</div>
 								<div className="flex">
 									<button
 										type="button"
@@ -103,7 +132,23 @@ export default function Cart() {
 										</div>
 									</div>
 								</div>
-
+								<div className="w-3/4 flex self-center mb-1">
+									<button
+										type="button"
+										onClick={handleClearCart}
+										disabled={cart.length === 0}
+										className={`flex items-center justify-center gap-2 w-full text-sm font-medium rounded bg-red-100 py-2
+                							${
+																cart.length === 0
+																	? "hidden"
+																	: "text-red-600 hover:bg-red-200 hover:text-red-700 cursor-pointer"
+															}
+            							`}
+									>
+										<TrashIcon className="h-5 w-5" />
+										Borrar carrito
+									</button>
+								</div>
 								<div className="border-t border-gray-200 px-4 py-6 sm:px-6">
 									<div className="flex justify-between text-base font-medium text-gray-900">
 										<p>Total</p>
@@ -114,9 +159,11 @@ export default function Cart() {
 											onClick={processPurchase}
 											disabled={cart.length === 0}
 											className={`w-full flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium shadow-xs
-            								${cart.length === 0
-                								? "bg-gray-600 text-white cursor-not-allowed"
-                								: "bg-indigo-600 text-white hover:bg-indigo-700  cursor-pointer"}
+            								${
+															cart.length === 0
+																? "bg-gray-600 text-white cursor-not-allowed"
+																: "bg-indigo-600 text-white hover:bg-indigo-700  cursor-pointer"
+														}
         									`}
 										>
 											Finalizar Compra
