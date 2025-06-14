@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Product } from "../types/Product";
+import { Product } from "../../types/Product";
 import { Bounce, toast } from "react-toastify";
 
 interface ProductCardProps {

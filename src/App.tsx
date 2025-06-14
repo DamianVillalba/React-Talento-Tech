@@ -6,14 +6,15 @@ import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayouts";
-import ProductDetails from "./components/ProductDetails";
+import ProductDetails from "./components/home/ProductDetails";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Login from "./pages/Login";
+import AdminLayout from "./layouts/AdminLayout";
 
 function App() {
 	return (
 		<Routes>
-			{/* Rutas con layout */}
+			{/* Rutas con MainLayout */}
 			<Route element={<MainLayout />}>
 				<Route path="/" element={<Home />} />
 				<Route path="/about-us" element={<AboutUs />} />
@@ -22,15 +23,16 @@ function App() {
 				<Route path="/products/:id" element={<ProductDetails />} />
 				<Route path="/login" element={<Login />} />
 			</Route>
-			{/* rutas sin layout */}
+			{/* Rutas protegidas con AdminLayout */}
 			<Route
-				path="/admin"
 				element={
 					<ProtectedRoute>
-						<Admin />
+						<AdminLayout />
 					</ProtectedRoute>
 				}
-			/>
+			>
+				<Route path="/admin" element={<Admin />} />
+			</Route>
 			<Route path="*" element={<NotFound />} />
 		</Routes>
 	);

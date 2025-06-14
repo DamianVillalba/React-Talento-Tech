@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
-function LoginForm() {
+const LoginForm = () => {
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useAuthContext();
@@ -11,9 +11,9 @@ function LoginForm() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (usuario === "admin" && password === "1234") {
-            login(usuario);
-            navigate("/dashboard");
+        if (usuario === "admin" && password === "123") {
+            login();
+            navigate("/admin");
         } else {
             setError("Credenciales incorrectas");
         }

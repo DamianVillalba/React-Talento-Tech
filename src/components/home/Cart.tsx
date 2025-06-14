@@ -7,7 +7,7 @@ import {
 	DialogTitle,
 } from "@headlessui/react";
 import { XMarkIcon, TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
@@ -26,8 +26,6 @@ export default function Cart() {
 		return cart.reduce((total, p) => total + p.price * p.quantity, 0);
 	};
 
-	//TODO: queda implementar decrementar, incrementar y limpiar carrito
-	//Los botones de pago mas adelante
 	const listCartItems = (): React.ReactNode => {
 		return (
 			<ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -89,6 +87,7 @@ export default function Cart() {
 		);
 	};
 
+	//TODO: queda implementar quitar stock con finalizar la compra como extra
 	return (
 		<Dialog open={showCart} onClose={toggleCart} className="relative z-10">
 			<DialogBackdrop

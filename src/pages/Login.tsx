@@ -1,5 +1,5 @@
 import BackToHomeLink from "../components/common/BackToHome";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/home/LoginForm";
 
 const Login = () => {
     return (

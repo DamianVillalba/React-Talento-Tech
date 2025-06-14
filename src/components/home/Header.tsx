@@ -1,9 +1,9 @@
 "use client";
 import { Link } from "react-router-dom";
 import { PopoverGroup } from "@headlessui/react";
-import Cart from "../Cart";
+import Cart from "./Cart";
 import { useCart } from "../../context/CartContext";
-import CartIcon from "./CartIcon";
+import CartIcon from "../static/CartIcon";
 
 export default function Header() {
 	const { cart, showCart, toggleCart } = useCart();
