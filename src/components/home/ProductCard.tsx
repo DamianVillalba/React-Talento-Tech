@@ -29,18 +29,20 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
 	return (
 		<div className="group relative">
 			<img
-				alt="Product"
-				src="https://placehold.co/240x320?text=Product"
-				className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+				alt={product.name}
+				src={product.img_url}
+				className="w-full h-90 object-fit max-h-full"
 			/>
-			<div className="mt-4 flex justify-between">
-				<div>
-					<h3 className="text-sm text-gray-700">{product.name}</h3>
-					<p className="text-sm font-medium text-gray-900">
-						Stock: {product.quantity}
-					</p>
-				</div>
-				<p className="text-sm font-medium text-gray-900">{product.price}</p>
+			<div className="mt-4 w-full flex flex-col items-center">
+				<h3
+					className="text-base font-bold text-gray-700 text-center mb-1 truncate"
+					title={product.name}
+				>
+					{product.name}
+				</h3>
+				<p className="text-lg font-semibold text-gray-900 text-center">
+					${product.price.toLocaleString("es-AR")}
+				</p>
 			</div>
 			<div className="mt-4 flex gap-2">
 				<Link to={`/products/${product.id}`} className="w-1/2">
