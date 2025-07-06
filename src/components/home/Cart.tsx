@@ -87,7 +87,6 @@ export default function Cart() {
 		);
 	};
 
-	//TODO: queda implementar quitar stock con finalizar la compra como extra
 	return (
 		<Dialog open={showCart} onClose={toggleCart} className="relative z-10">
 			<DialogBackdrop

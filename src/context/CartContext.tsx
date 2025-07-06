@@ -5,12 +5,12 @@ import Swal from "sweetalert2";
 interface ContextType {
 	cart: Product[];
 	showCart: boolean;
-	handleAddToCart: (product: Product) => void;
+	handleAddToCart: (product: Product, quantity?: number) => void;
 	handleRemoveFromCart: (productName: string, id: string) => void;
 	handleIncrementItem: (id: string) => void;
 	handleDecrementItem: (id: string) => void;
 	toggleCart: () => void;
-	processPurchase : () => void;
+	processPurchase: () => void;
 	handleClearCart: () => void;
 }
 
@@ -20,15 +20,14 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 	const [cart, setCart] = useState<Product[]>([]);
 	const [showCart, setShowCart] = useState(false);
 
-	const handleAddToCart = (product: Product) => {
+	const handleAddToCart = (product: Product, quantity = 1) => {
 		setCart((prevCart) => {
-			const existing = prevCart.find((p) => p.id === product.id); //busco si existe el producto en el carrito
-			if (existing) {
-				return prevCart.map(
-					(p) => (p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p) //si existe le sumo 1
-				);
-			}
-			return [...prevCart, { ...product, quantity: 1 }]; //sino agrego el producto y le asigno 1 como cantidad inicial
+			const existing = prevCart.find((p) => p.id === product.id);
+			return existing
+				? prevCart.map((p) =>
+						p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p
+				  )
+				: [...prevCart, { ...product, quantity }];
 		});
 	};
 
@@ -103,11 +102,11 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 				});
 			}
 		});
-	}
+	};
 
 	const clearCart = () => {
 		setCart([]);
-	}
+	};
 
 	return (
 		<CartContext.Provider
