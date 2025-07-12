@@ -6,7 +6,12 @@ import {
 	DialogPanel,
 	DialogTitle,
 } from "@headlessui/react";
-import { XMarkIcon, TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
+import {
+	XMarkIcon,
+	TrashIcon,
+	PlusIcon,
+	MinusIcon,
+} from "@heroicons/react/24/outline";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 
@@ -23,7 +28,9 @@ export default function Cart() {
 	} = useCart();
 
 	const totalCart = () => {
-		return cart.reduce((total, p) => total + p.price * p.quantity, 0);
+		return cart
+			.reduce((total, p) => total + p.price * p.cartQuantity, 0)
+			.toLocaleString("es-AR");
 	};
 
 	const listCartItems = (): React.ReactNode => {
@@ -31,10 +38,13 @@ export default function Cart() {
 			<ul role="list" className="-my-6 divide-y divide-gray-200">
 				{cart.map((product) => (
 					<li key={product.id} className="flex py-6">
-						{/* proximamente...?
-                                <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                <img alt={product.name} src={product.img} className="size-full object-cover" />
-                                </div> */}
+						<div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+							<img
+								alt={product.name}
+								src={product.img_url}
+								className="size-full object-fit"
+							/>
+						</div>
 
 						<div className="ml-4 flex flex-1 flex-col">
 							<div>
@@ -42,7 +52,9 @@ export default function Cart() {
 									<Link to={`/products/${product.id}`}>
 										<h3>{product.name}</h3>
 									</Link>
-									<p className="ml-4">{product.price}</p>
+									<p className="ml-4">
+										${product.price.toLocaleString("es-AR")}
+									</p>
 								</div>
 							</div>
 							<div className="flex flex-1 items-end justify-between text-sm">
@@ -51,18 +63,19 @@ export default function Cart() {
 										type="button"
 										onClick={() => handleDecrementItem(product.id)}
 										className="p-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50"
-										disabled={product.quantity <= 1}
+										disabled={product.cartQuantity <= 1}
 										aria-label="Quitar uno"
 									>
 										<MinusIcon className="h-4 w-4" />
 									</button>
 									<span className="text-gray-700 font-medium min-w-[24px] text-center">
-										{product.quantity}
+										{product.cartQuantity}
 									</span>
 									<button
 										type="button"
 										onClick={() => handleIncrementItem(product.id)}
-										className="p-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+										className="p-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50"
+										disabled={product.cartQuantity >= product.quantity}
 										aria-label="Sumar uno"
 									>
 										<PlusIcon className="h-4 w-4" />
@@ -130,7 +143,7 @@ export default function Cart() {
 										</div>
 									</div>
 								</div>
-								<div className="w-3/4 flex self-center mb-1">
+								<div className="w-3/4 flex self-center my-1">
 									<button
 										type="button"
 										onClick={handleClearCart}

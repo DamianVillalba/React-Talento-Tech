@@ -2,8 +2,8 @@ import { ShoppingCart, ArrowLeft, Plus, Minus } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useProducts } from "../../context/ProductContext";
 import NotFound from "../../pages/NotFound";
-import { useCart } from "../../context/CartContext";
 import { useState } from "react";
+import { useCart } from "../../context/CartContext";
 
 const ProductDetails = () => {
 	const [quantity, setQuantity] = useState(1);
@@ -45,7 +45,6 @@ const ProductDetails = () => {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 					{/* Product Images */}
 					<div className="space-y-4">
-						{/* Main Image */}
 						<div className="aspect-[4/5] bg-white rounded-2xl overflow-hidden shadow-lg">
 							<img
 								src={product.img_url}
@@ -127,7 +126,7 @@ const ProductDetails = () => {
 									className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${
 										isOutOfStock
 											? "bg-gray-100 text-gray-400 cursor-not-allowed"
-											: "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer hover:shadow-lg active:scale-95"
+											: "bg-indigo-600 text-white hover:bg-indigo-700 cursor-pointer hover:shadow-lg active:scale-95"
 									}`}
 								>
 									<ShoppingCart className="w-5 h-5" />
@@ -135,7 +134,7 @@ const ProductDetails = () => {
 										? "Fuera de stock"
 										: `Agregar al carrito - $${(
 												product.price * quantity
-										  ).toFixed(2)}`}
+										  ).toLocaleString("es-AR")}`}
 								</button>
 							</div>
 						</div>

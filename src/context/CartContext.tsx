@@ -1,9 +1,15 @@
 import { createContext, useState, PropsWithChildren, useContext } from "react";
 import { Product } from "../types/Product";
 import Swal from "sweetalert2";
+import { Bounce, ToastOptions } from "react-toastify";
+import { notify } from "../utils/notify";
+
+interface CartProduct extends Product {
+	cartQuantity: number;
+}
 
 interface ContextType {
-	cart: Product[];
+	cart: CartProduct[];
 	showCart: boolean;
 	handleAddToCart: (product: Product, quantity?: number) => void;
 	handleRemoveFromCart: (productName: string, id: string) => void;
@@ -14,21 +20,58 @@ interface ContextType {
 	handleClearCart: () => void;
 }
 
-export const CartContext = createContext<ContextType | null>(null);
+export const CartContext = createContext<Required<ContextType>>({
+	cart: [],
+	showCart: false,
+	handleAddToCart: () => {},
+	handleRemoveFromCart: () => {},
+	handleIncrementItem: () => {},
+	handleDecrementItem: () => {},
+	toggleCart: () => {},
+	processPurchase: () => {},
+	handleClearCart: () => {},
+});
 
 export const CartProvider = ({ children }: PropsWithChildren) => {
-	const [cart, setCart] = useState<Product[]>([]);
+	const [cart, setCart] = useState<CartProduct[]>([]);
 	const [showCart, setShowCart] = useState(false);
 
+	const toastConfig: ToastOptions = {
+		position: "top-right",
+		autoClose: 4000,
+		hideProgressBar: false,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+		theme: "light",
+		transition: Bounce,
+	};
+
 	const handleAddToCart = (product: Product, quantity = 1) => {
+		const existingProduct = cart.find((p) => p.id === product.id);
+		const currentCartQuantity = existingProduct
+			? existingProduct.cartQuantity
+			: 0;
+		if (currentCartQuantity + quantity > product.quantity) {
+			notify(
+				"No hay suficiente stock para agregar esta cantidad ❌",
+				"error",
+				toastConfig
+			);
+			return;
+		}
 		setCart((prevCart) => {
 			const existing = prevCart.find((p) => p.id === product.id);
 			return existing
 				? prevCart.map((p) =>
-						p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p
+						p.id === product.id
+							? { ...p, cartQuantity: p.cartQuantity + quantity }
+							: p
 				  )
-				: [...prevCart, { ...product, quantity }];
+				: [...prevCart, { ...product, cartQuantity: quantity }];
 		});
+		notify("Producto agregado al carrito 🛒", "success", toastConfig);
 	};
 
 	const handleRemoveFromCart = (productName: string, id: string) => {
@@ -56,17 +99,16 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
 	const handleIncrementItem = (id: string) => {
 		setCart((prevCart) =>
 			prevCart.map(
-				(p) => (p.id === id ? { ...p, quantity: p.quantity + 1 } : p) //si existe le sumo 1
+				(p) => (p.id === id ? { ...p, cartQuantity: p.cartQuantity + 1 } : p) //si existe le sumo 1
 			)
 		);
 	};
 
 	const handleDecrementItem = (id: string) => {
-		setCart(
-			(prevCart) =>
-				prevCart
-					.map((p) => (p.id === id ? { ...p, quantity: p.quantity - 1 } : p))
-					.filter((p) => p.quantity > 0) // elimina si llega a 0
+		setCart((prevCart) =>
+			prevCart.map((p) =>
+				p.id === id ? { ...p, cartQuantity: p.cartQuantity - 1 } : p
+			)
 		);
 	};
 

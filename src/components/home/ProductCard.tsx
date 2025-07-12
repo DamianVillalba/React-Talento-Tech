@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Product } from "../../types/Product";
-import { Bounce, toast } from "react-toastify";
 
 interface ProductCardProps {
 	product: Product;
@@ -8,24 +7,6 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, addToCart }: ProductCardProps) => {
-	const notify = () =>
-		toast.success("Producto agregado al carrito 🛒", {
-			position: "top-right",
-			autoClose: 4000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: "light",
-			transition: Bounce,
-		});
-
-	const addAndNotify = (product: Product) => {
-		addToCart(product);
-		notify();
-	};
-
 	return (
 		<div className="group relative">
 			<img
@@ -51,7 +32,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
 					</button>
 				</Link>
 				<button
-					onClick={() => addAndNotify(product)}
+					onClick={() => addToCart(product)}
 					className="w-3/4 bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition hover:cursor-pointer"
 				>
 					Agregar al carrito
