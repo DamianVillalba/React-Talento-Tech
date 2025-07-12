@@ -10,7 +10,7 @@ export default function Header() {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex justify-between items-center py-6">
 					<div className="flex items-center gap-3">
-						<div className="p-2 bg-indigo-600 rounded-lg">
+						<div className="hidden sm:inline p-2 bg-indigo-600 rounded-lg">
 							<Package className="h-6 w-6 text-white" />
 						</div>
 						<div>
@@ -23,7 +23,7 @@ export default function Header() {
 						</div>
 					</div>
 
-					<div className="flex items-center gap-3">
+					<div className="flex items-center justify-center gap-3 flex-wrap sm:flex-nowrap">
 						<button
 							onClick={fetchData}
 							disabled={isLoading}
@@ -37,10 +37,10 @@ export default function Header() {
 
 						<button
 							onClick={() => toggleForm()}
-							className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors shadow-sm"
+							className="inline-flex items-center gap-2 px-3 py-2 sm:px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors shadow-sm text-sm sm:text-base"
 						>
 							<Plus className="h-4 w-4" />
-							Nuevo Producto
+							<span className="hidden sm:inline">Nuevo Producto</span>
 						</button>
 					</div>
 				</div>
