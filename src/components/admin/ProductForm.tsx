@@ -214,7 +214,7 @@ const ProductForm = ({
 						</label>
 						<input
 							type="text"
-							name="img_rul"
+							name="img_url"
 							id="img_url"
 							value={productForm.img_url}
 							onChange={handleChange}
