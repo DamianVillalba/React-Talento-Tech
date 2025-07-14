@@ -7,6 +7,7 @@ import { ProductProvider } from './context/ProductContext.tsx'
 import CartProvider from './context/CartContext.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
 import { ToastContainer } from 'react-toastify'
+import { SearchProvider } from './context/SearchContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,8 +15,10 @@ createRoot(document.getElementById('root')!).render(
       <ProductProvider>
         <CartProvider>
           <AuthProvider>
-            <ToastContainer newestOnTop />
-            <App />
+            <SearchProvider>
+              <ToastContainer newestOnTop />
+              <App />
+            </SearchProvider>
           </AuthProvider>
         </CartProvider>
       </ProductProvider>

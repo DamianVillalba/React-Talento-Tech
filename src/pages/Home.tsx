@@ -12,7 +12,7 @@ const Home = () => {
 			<h1 className="text-3xl text-center font-bold m-4">
 				Bienvenido a nuestra tienda
 			</h1>
-            <ProductSection isLoading={isLoading} error={error} products={products} ProductCardComponent={ProductCard} cardProps={{ addToCart: handleAddToCart }} layoutProps={{title: "Explora nuestros productos!"}} />
+            <ProductSection isLoading={isLoading} error={error} products={products} ProductCardComponent={ProductCard} cardProps={{ addToCart: handleAddToCart }} title = {"Explora nuestros productos!"} />
 		</section>
 	);
 };
