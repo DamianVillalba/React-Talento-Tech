@@ -4,20 +4,28 @@ import ProductCard from "../components/admin/ProductCard";
 import { useProducts } from "../context/ProductContext";
 
 const Admin = () => {
-	const { products, editingProduct, showForm, isLoading, editProduct, handleDeleteProduct, toggleForm, handleSubmit } = useProducts();
+	const {
+		products,
+		editingProduct,
+		showForm,
+		isLoading,
+		editProduct,
+		handleDeleteProduct,
+		toggleForm,
+		handleSubmit,
+	} = useProducts();
 
 	return (
 		<div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <ProductList
-					products={products}
-					ProductCardComponent={ProductCard}
-					cardProps={{
-						onEdit: editProduct,
-						onDelete: handleDeleteProduct
-					}}
-				/>
-            </div>
+			<ProductList
+				products={products}
+				ProductCardComponent={ProductCard}
+				cardProps={{
+					onEdit: editProduct,
+					onDelete: handleDeleteProduct,
+				}}
+				gridStyle="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+			/>
 			{showForm && (
 				<ProductForm
 					onSubmit={handleSubmit}

@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import { Product } from "../../types/Product";
 import { useSearch } from "../../context/SearchContext";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -7,12 +7,14 @@ interface ProductListProps extends PropsWithChildren {
 	products: Product[];
 	ProductCardComponent: React.ComponentType<any>;
 	cardProps?: Record<string, any>;
+	gridStyle: string;
 }
 
 const ProductList = ({
 	products,
 	ProductCardComponent,
 	cardProps = {},
+	gridStyle,
 }: ProductListProps) => {
 	const { search, updateSearch } = useSearch();
 	const filteredProducts = products.filter((product) =>
@@ -36,7 +38,7 @@ const ProductList = ({
 				</div>
 			</div>
 			{filteredProducts.length > 0 ? (
-				<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+				<div className={gridStyle}>
 					{filteredProducts.map((product) => (
 						<ProductCardComponent
 							key={product.id}
