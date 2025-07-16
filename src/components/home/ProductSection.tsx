@@ -24,17 +24,21 @@ const ProductSection = ({
 	<ContentState isLoading={isLoading} error={error}>
 		<section className="bg-white">
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 lg:py-6">
-        {title && (
-          <h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 mb-4">
-            {title}
-          </h2>
-        )}
-        <ProductList
-          products={products}
-          ProductCardComponent={ProductCardComponent}
-          cardProps={cardProps}
-          gridStyle={"mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"}
-        />
+				{title && (
+					<h2 className="text-2xl text-center font-bold tracking-tight text-gray-900 mb-4">
+						{title}
+					</h2>
+				)}
+				<ProductList
+					products={products}
+					ProductCardComponent={ProductCardComponent}
+					cardProps={cardProps}
+					gridStyle={
+						"mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+					}
+					showSearchBar={true}
+					showPaginator={true}
+				/>
 			</div>
 		</section>
 	</ContentState>

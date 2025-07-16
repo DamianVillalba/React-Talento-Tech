@@ -31,12 +31,18 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
 						Ver más
 					</button>
 				</Link>
-				<button
-					onClick={() => addToCart(product)}
-					className="w-3/4 bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition hover:cursor-pointer"
-				>
-					Agregar al carrito
-				</button>
+				{product.quantity > 0 ? (
+					<button
+						onClick={() => addToCart(product)}
+						className="w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition hover:cursor-pointer"
+					>
+						Agregar al carrito
+					</button>
+				) : (
+					<p className="w-full bg-red-100 text-red-700 text-center font-semibold py-2 rounded-md mb-0">
+						Sin stock
+					</p>
+				)}
 			</div>
 		</div>
 	);
