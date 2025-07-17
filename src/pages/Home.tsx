@@ -2,6 +2,10 @@ import { useCart } from "../context/CartContext";
 import { useProducts } from "../context/ProductContext";
 import ProductSection from "../components/home/ProductSection";
 import ProductCard from "../components/home/ProductCard";
+import IncentivesSection from "../components/home/IncentivesSection";
+import StoreReviews from "../components/home/StoreReviews";
+import ProductCarousel from "../components/home/ProductCarousel";
+import ProductList from "../components/common/ProductList";
 
 const Home = () => {
 	const { handleAddToCart } = useCart();
@@ -9,10 +13,20 @@ const Home = () => {
 
 	return (
 		<section>
-			<h1 className="text-3xl text-center font-bold m-4">
-				Bienvenido a nuestra tienda
-			</h1>
-            <ProductSection isLoading={isLoading} error={error} products={products} ProductCardComponent={ProductCard} cardProps={{ addToCart: handleAddToCart }} title = {"Explora nuestros productos!"} />
+			<ProductCarousel />
+            <ProductSection isLoading={isLoading} error={error} title = {"Explora nuestros productos!"}>
+				<ProductList
+						products={products}
+						ProductCardComponent={ProductCard}
+						cardProps={{ addToCart: handleAddToCart }}
+						gridStyle={
+							"mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+						}
+						showViewAllButton={true}
+					/>
+			 </ProductSection>
+			<StoreReviews />
+			<IncentivesSection />
 		</section>
 	);
 };

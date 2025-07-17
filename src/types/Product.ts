@@ -1,8 +1,14 @@
 export interface Product {
-    id : string;
-    name : string;
-    price : number;
-    description: string;
-    quantity: number;
-    img_url: string;
+	id: string;
+	name: string;
+	price: number;
+	originalPrice?: number;
+	description: string;
+	category: string;
+	quantity: number;
+	img_url: string;
+}
+
+export interface CartProduct extends Product {
+	cartQuantity: number;
 }
