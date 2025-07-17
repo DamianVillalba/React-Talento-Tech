@@ -1,10 +1,12 @@
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren } from "react";
 import { Product } from "../../types/Product";
 import { useSearch } from "../../context/SearchContext";
 import SearchBar from "./SearchBar";
 import Paginator from "./Paginator";
 import ProductGrid from "./ProductGrid";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useResetPageOnSearchChange } from "../../hooks/useResetPageOnSearchChange";
+import { usePagination } from "../../hooks/usePagination";
 
 interface ProductListProps extends PropsWithChildren {
 	products: Product[];
@@ -13,7 +15,9 @@ interface ProductListProps extends PropsWithChildren {
 	gridStyle: string;
 	showSearchBar?: boolean;
 	showPaginator?: boolean;
+	paginatorPath?: string;
 	qtyProductsPerPage?: number;
+	qtyProductsShow?: number;
 	showViewAllButton?: boolean;
 }
 
@@ -22,26 +26,32 @@ const ProductList = ({
 	ProductCardComponent,
 	cardProps = {},
 	gridStyle,
-	showSearchBar,
-	showPaginator,
-	qtyProductsPerPage,
+	showSearchBar = false,
+	showPaginator = false,
+	qtyProductsPerPage = 8,
+	qtyProductsShow,
 	showViewAllButton,
+	paginatorPath,
 }: ProductListProps) => {
 	const { search, updateSearch } = useSearch();
-	const { page } = useParams();
 
-	// Cargar la página correspondiente
-	const currentPage = parseInt(page ?? '1', 10);
+	// Cada vez que se cambia el texto del buscador, vuelve a la página 1
+	useResetPageOnSearchChange(search, showPaginator);
 
 	const filteredProducts = products.filter((product) =>
 		product.name.toLowerCase().includes(search.toLowerCase())
 	);
 
-	const productsPerPage = qtyProductsPerPage || 8;
-	const LastIndex = currentPage * productsPerPage;
-	const FirstIndex = LastIndex - productsPerPage;
-	const currentProducts = filteredProducts.slice(FirstIndex, LastIndex);
-	const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+	//configuracion del paginador
+	const paginationData = usePagination({
+		items: filteredProducts,
+		qtyPerPage: qtyProductsPerPage,
+	});
+
+	const { currentPage, currentItems, totalPages } = paginationData;
+
+	//selecciono los productos en base si hay paginador o no.
+	const currentProducts = showPaginator ? currentItems : filteredProducts.slice(0, qtyProductsShow);
 
 	return (
 		<>
@@ -73,11 +83,11 @@ const ProductList = ({
 					No hay productos que coincidan con la búsqueda.
 				</p>
 			)}
-			{showPaginator && (
+			{showPaginator && paginatorPath && (
 				<Paginator
 					currentPage={currentPage}
 					totalPages={totalPages}
-					basePath={`/products`}
+					basePath={paginatorPath}
 				/>
 			)}
 		</>

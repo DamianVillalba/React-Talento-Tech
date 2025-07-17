@@ -22,6 +22,7 @@ const Products = () => {
 				}
 				showSearchBar={true}
 				showPaginator={true}
+				paginatorPath="/products"
 			/>
 		</ProductSection>
 	);

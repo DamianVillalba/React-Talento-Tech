@@ -25,8 +25,10 @@ const Admin = () => {
 					onDelete: handleDeleteProduct,
 				}}
 				gridStyle="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+				showSearchBar={true}
 				showPaginator={true}
 				qtyProductsPerPage={9}
+				paginatorPath="/admin"
 			/>
 			{showForm && (
 				<ProductForm
