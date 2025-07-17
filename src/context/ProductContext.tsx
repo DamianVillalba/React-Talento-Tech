@@ -81,14 +81,16 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
 	};
 
 	const handdleAddProduct = async (productAdd: Omit<Product, "id">) => {
+		setLoading(true);
 		const { product, errorFetch } = await createProduct(productAdd);
 		if (product) {
 			setProducts((prev) => [...prev, product]); // agrego localmente para evitar fetch
-			setShowForm(false);
 			notify("Producto agregado correctamente", "success", toastConfig);
+			toggleForm();
 		} else {
 			setError(errorFetch || "Error desconocido.");
 		}
+		setLoading(false);
 	};
 
 	const editProduct = (product: Product) => {
@@ -100,15 +102,16 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
 		id: string,
 		productUpdated: Omit<Product, "id">
 	) => {
+		setLoading(true);
 		const { product, errorFetch } = await updateProduct(id, productUpdated);
 		if (product) {
 			setProducts((prev) => prev.map((p) => (p.id === id ? product : p))); // update localmente para evitar fetch
-			setShowForm(false);
-			setEditingProduct(undefined);
 			notify("Producto actualizado correctamente", "success", toastConfig);
+			toggleForm()
 		} else {
 			setError(errorFetch || "Error desconocido.");
 		}
+		setLoading(false);
 	};
 
 	const handleDeleteProduct = (id: string) => {
@@ -133,7 +136,14 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
 	};
 
 	const toggleForm = () => {
-		setShowForm((prev) => !prev);
+		setShowForm((prev) => {
+            //limpia editingProduct
+            if (prev) {
+                setEditingProduct(undefined);
+                setError(null); // También limpiar errores al cerrar
+            }
+            return !prev; // Retornar el nuevo estado de showForm
+        });
 	};
 
 	const deleteProductConfirmed = async (id: string) => {
