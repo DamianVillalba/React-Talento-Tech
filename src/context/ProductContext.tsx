@@ -18,6 +18,8 @@ import Swal from "sweetalert2";
 
 interface ContextType {
 	products: Product[];
+	saleProducts: Product[];
+	featuredProducts: Product[];
 	editingProduct: Product | undefined;
 	isLoading: boolean;
 	error: string | null;
@@ -148,10 +150,20 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
 		}
 	};
 
+	const saleProducts = products.filter(
+		(product) =>
+			product.originalPrice &&
+			product.originalPrice > product.price
+	);
+
+	const featuredProducts = products.slice(0, 4);
+
 	return (
 		<ProductContext.Provider
 			value={{
 				products,
+				saleProducts,
+				featuredProducts,
 				editingProduct,
 				isLoading,
 				error,

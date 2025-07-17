@@ -4,6 +4,7 @@ import { useSearch } from "../../context/SearchContext";
 import SearchBar from "./SearchBar";
 import Paginator from "./Paginator";
 import ProductGrid from "./ProductGrid";
+import { Link, useParams } from "react-router-dom";
 
 interface ProductListProps extends PropsWithChildren {
 	products: Product[];
@@ -13,6 +14,7 @@ interface ProductListProps extends PropsWithChildren {
 	showSearchBar?: boolean;
 	showPaginator?: boolean;
 	qtyProductsPerPage?: number;
+	showViewAllButton?: boolean;
 }
 
 const ProductList = ({
@@ -23,18 +25,17 @@ const ProductList = ({
 	showSearchBar,
 	showPaginator,
 	qtyProductsPerPage,
+	showViewAllButton,
 }: ProductListProps) => {
 	const { search, updateSearch } = useSearch();
-	const [currentPage, setCurrentPage] = useState(1);
+	const { page } = useParams();
+
+	// Cargar la página correspondiente
+	const currentPage = parseInt(page ?? '1', 10);
 
 	const filteredProducts = products.filter((product) =>
 		product.name.toLowerCase().includes(search.toLowerCase())
 	);
-
-	// Resetear página al cambiar búsqueda
-	useEffect(() => {
-		setCurrentPage(1);
-	}, [search]);
 
 	const productsPerPage = qtyProductsPerPage || 8;
 	const LastIndex = currentPage * productsPerPage;
@@ -52,12 +53,21 @@ const ProductList = ({
 				/>
 			)}
 			{filteredProducts.length > 0 ? (
-				<ProductGrid
-					products={currentProducts}
-					ProductCardComponent={ProductCardComponent}
-					cardProps={cardProps}
-					gridStyle={gridStyle}
-				/>
+				<div className="flex flex-col items-center">
+					<ProductGrid
+						products={currentProducts}
+						ProductCardComponent={ProductCardComponent}
+						cardProps={cardProps}
+						gridStyle={gridStyle}
+					/>
+					{showViewAllButton && (
+						<Link to="/products">
+							<button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-500 transition-colors duration-300 mt-4 hover:cursor-pointer">
+								Ver Todo
+							</button>
+						</Link>
+					)}
+				</div>
 			) : (
 				<p className="text-center text-gray-500 text-lg mt-8 font-medium">
 					No hay productos que coincidan con la búsqueda.
@@ -67,7 +77,7 @@ const ProductList = ({
 				<Paginator
 					currentPage={currentPage}
 					totalPages={totalPages}
-					onPageChange={setCurrentPage}
+					basePath={`/products`}
 				/>
 			)}
 		</>

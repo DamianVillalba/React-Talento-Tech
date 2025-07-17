@@ -10,31 +10,35 @@ import ProductDetails from "./components/home/ProductDetails";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Login from "./pages/Login";
 import AdminLayout from "./layouts/AdminLayout";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
 	return (
-		<Routes>
-			{/* Rutas con MainLayout */}
-			<Route element={<MainLayout />}>
-				<Route path="/" element={<Home />} />
-				<Route path="/about-us" element={<AboutUs />} />
-				<Route path="/contact" element={<Contact />} />
-				<Route path="/products" element={<Products />} />
-				<Route path="/products/:id" element={<ProductDetails />} />
-				<Route path="/login" element={<Login />} />
-			</Route>
-			{/* Rutas protegidas con AdminLayout */}
-			<Route
-				element={
-					<ProtectedRoute>
-						<AdminLayout />
-					</ProtectedRoute>
-				}
-			>
-				<Route path="/admin" element={<Admin />} />
-			</Route>
-			<Route path="*" element={<NotFound />} />
-		</Routes>
+		<>
+			<ScrollToTop />
+			<Routes>
+				{/* Rutas con MainLayout */}
+				<Route element={<MainLayout />}>
+					<Route path="/" element={<Home />} />
+					<Route path="/about-us" element={<AboutUs />} />
+					<Route path="/contact" element={<Contact />} />
+					<Route path="/products" element={<Products />} />
+					<Route path="/products/:id" element={<ProductDetails />} />
+					<Route path="/login" element={<Login />} />
+				</Route>
+				{/* Rutas protegidas con AdminLayout */}
+				<Route
+					element={
+						<ProtectedRoute>
+							<AdminLayout />
+						</ProtectedRoute>
+					}
+				>
+					<Route path="/admin" element={<Admin />} />
+				</Route>
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+		</>
 	);
 }
 

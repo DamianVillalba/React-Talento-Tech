@@ -1,3 +1,4 @@
+import ProductList from "../components/common/ProductList";
 import ProductCard from "../components/home/ProductCard";
 import ProductSection from "../components/home/ProductSection";
 import { useCart } from "../context/CartContext";
@@ -11,10 +12,18 @@ const Products = () => {
 		<ProductSection
 			isLoading={isLoading}
 			error={error}
-			products={products}
-			ProductCardComponent={ProductCard}
-			cardProps={{ addToCart: handleAddToCart }}
-		/>
+		>
+			<ProductList
+				products={products}
+				ProductCardComponent={ProductCard}
+				cardProps={{ addToCart: handleAddToCart }}
+				gridStyle={
+					"mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+				}
+				showSearchBar={true}
+				showPaginator={true}
+			/>
+		</ProductSection>
 	);
 };
 

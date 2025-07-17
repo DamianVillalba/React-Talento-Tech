@@ -1,25 +1,18 @@
-// src/components/common/ProductSection.tsx
 import ContentState from "../common/ContentStateProps";
-import ProductList from "../common/ProductList";
-import { Product } from "../../types/Product";
 
 interface ProductSectionProps {
 	isLoading: boolean;
 	error?: string | null;
-	products: Product[];
-	ProductCardComponent: React.ComponentType<any>;
-	cardProps?: Record<string, any>;
 	title?: string;
+	children: React.ReactNode;
 }
 
 //componente destinado a crear seccion grid de productos
 const ProductSection = ({
 	isLoading,
 	error,
-	products,
-	ProductCardComponent,
-	cardProps = {},
 	title,
+	children
 }: ProductSectionProps) => (
 	<ContentState isLoading={isLoading} error={error}>
 		<section className="bg-white">
@@ -29,16 +22,7 @@ const ProductSection = ({
 						{title}
 					</h2>
 				)}
-				<ProductList
-					products={products}
-					ProductCardComponent={ProductCardComponent}
-					cardProps={cardProps}
-					gridStyle={
-						"mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
-					}
-					showSearchBar={true}
-					showPaginator={true}
-				/>
+				{children}
 			</div>
 		</section>
 	</ContentState>

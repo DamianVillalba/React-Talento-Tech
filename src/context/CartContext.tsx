@@ -1,13 +1,8 @@
 import { createContext, useState, PropsWithChildren, useContext } from "react";
-import { Product } from "../types/Product";
+import { Product, CartProduct } from "../types/Product";
 import Swal from "sweetalert2";
 import { Bounce, ToastOptions } from "react-toastify";
 import { notify } from "../utils/notify";
-
-interface CartProduct extends Product {
-	cartQuantity: number;
-}
-
 interface ContextType {
 	cart: CartProduct[];
 	showCart: boolean;
