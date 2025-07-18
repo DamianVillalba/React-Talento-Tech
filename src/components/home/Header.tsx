@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Cart from "./Cart";
 import { useCart } from "../../context/CartContext";
 import CartIcon from "../static/CartIcon";
+import logo from '../../assets/logo-store.png';
 import { useState } from "react";
 
 export default function Header() {
@@ -26,7 +27,7 @@ export default function Header() {
 					<Link to="/" className="-m-1.5 p-1.5">
 						<img
 							alt="Home"
-							src="/src/assets/logo-store.png"
+							src={logo}
 							className="h-14 lg:h-18 w-auto"
 						/>
 					</Link>
