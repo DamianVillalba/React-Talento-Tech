@@ -140,7 +140,7 @@ const ProductForm = ({
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
 			<div className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-				<div className="flex items-center justify-between p-6 border-b border-gray-200 bg-amber-100 rounded-t-xl">
+				<div className="flex items-center justify-between p-5 border-b border-gray-200 bg-amber-100 rounded-t-xl">
 					<h2 className="text-xl font-semibold text-gray-900">
 						{editingProduct ? "Editar Producto" : "Nuevo Producto"}
 					</h2>
@@ -167,7 +167,7 @@ const ProductForm = ({
 							id="name"
 							value={productForm.name}
 							onChange={handleChange}
-							className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-colors ${
+							className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 focus:outline-none transition-colors ${
 								errors.name ? "border-red-500" : "border-gray-300"
 							}`}
 							placeholder="Ingresa el nombre del producto"
@@ -194,7 +194,7 @@ const ProductForm = ({
 									id="originalPrice"
 									value={productForm.originalPrice}
 									onChange={handleChange}
-									className={`w-full pl-8 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-colors ${
+									className={`w-full pl-8 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 focus:outline-none transition-colors ${
 										errors.originalPrice ? "border-red-500" : "border-gray-300"
 									}`}
 								/>
@@ -220,7 +220,7 @@ const ProductForm = ({
 									id="price"
 									value={productForm.price}
 									onChange={handleChange}
-									className={`w-full pl-8 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-colors ${
+									className={`w-full pl-8 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 focus:outline-none transition-colors ${
 										errors.price ? "border-red-500" : "border-gray-300"
 									}`}
 									placeholder="1"
@@ -247,7 +247,7 @@ const ProductForm = ({
 									id="category"
 									value={productForm.category}
 									onChange={handleChange}
-									className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-colors ${
+									className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 focus:outline-none transition-colors ${
 										errors.category ? "border-red-500" : "border-gray-300"
 									}`}
 									placeholder="Ingresa la categoria"
@@ -272,7 +272,7 @@ const ProductForm = ({
 								id="quantity"
 								value={productForm.quantity}
 								onChange={handleChange}
-								className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-colors ${
+								className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 focus:outline-none transition-colors ${
 									errors.quantity ? "border-red-500" : "border-gray-300"
 								}`}
 								placeholder="0"
@@ -297,7 +297,7 @@ const ProductForm = ({
 							id="img_url"
 							value={productForm.img_url}
 							onChange={handleChange}
-							className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-colors ${
+							className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 focus:outline-none transition-colors ${
 								errors.img_url ? "border-red-500" : "border-gray-300"
 							}`}
 							placeholder="Ingresa el url de la imagen "
@@ -321,7 +321,7 @@ const ProductForm = ({
 							value={productForm.description}
 							onChange={handleChange}
 							rows={3}
-							className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-colors resize-none ${
+							className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 focus:outline-none transition-colors resize-none ${
 								errors.description ? "border-red-500" : "border-gray-300"
 							}`}
 							placeholder="Describe el producto (mínimo 10 caracteres)"
